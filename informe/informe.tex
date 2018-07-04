@@ -21,8 +21,13 @@
 
 \lstset{style=go}
 
+\section{Introducción}
 
+En el año 2007, tres ingenieros de Google (\emph{Robert Griesemer}, \emph{Rob Pike}, y \emph{Ken Thompson}) comenzaron a diseñar el lenguaje de programación \emph{Go}, como proyecto secundario. Para el 2008, empezaron con el desarrollo de un compilador y un \emph{runtime} \footnote{Software diseñado para soportar la ejecución de programas escritos en algún lenguaje de programación \autocite{Wikipedia:runtime}}. El 30 de Octubre de 2009, Rob Pike dio la primer charla sobre Go en una \emph{Google Techtalk} \autocite{TheGoProgrammingLanguage}, pero recién para el 10 de Noviembre de ese mismo año el proyecto fue oficialmente anunciado. Debido a que el proyecto es \emph{open-source}, se formó una gran comunidad que aceleró el desarrollo y uso del lenguaje 
 
+A partir de Mayo de 2010, Google utiliza Go en producción para la infraestructura de sus servidores (lo cual demuestra que la empresa apuesta en él, y que el lenguaje tiene peso como para estar en producción \autocite{TheWayToGo})
+
+\vspace*{10mm}
 \begin{lstlisting}[title=\dq{Hola mundo} en Go]
 package main
 
@@ -32,6 +37,107 @@ func main() {
     fmt.Println("Hello world!")
 }
 \end{lstlisting}
+
+
+Sus creadores decidieron encarar el proyecto al ver que no había surgido ningún lenguaje de programación (de bajo nivel pero con amplios niveles de abstracción) que sea adeacuado para el panorama computacional de hoy en día. Por lo tanto, se considera a Go como \dq{el C del siglo 21} \autocite{BookTheGoProgrammingLanguage} 
+
+El lenguaje se utiliza mucho para construir servidores, herramientas y sistemas para programadores, pero no deja de ser un lenguaje de propósito general.
+
+Existen muchos lenguajes de programación que influenciaron distintas decisiones de diseño de Go, siendo alguno de ellos C (sintaxis, sentencias de flujo de control, tipos de datos básicos, \textbf{pasaje de parámetros por copia}, punteros), pero también Pascal, Modula-2 (sistema de paquetes), y CSP (manejo de concurrencia)
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{ancestros.png}
+    \caption{Ancestros de Go \autocite{BookTheGoProgrammingLanguage}}
+    \label{fig:name}
+\end{figure}
+
+
+\section{Criterios de evaluación}
+
+Go tiene una sintaxis consisa y regular, conseguida con pocas palabras reservadas. Esto aumenta la velocidad de compilación (las sentencias pueden ser evaluadas por la gramática sin una \emph{tabla de símbolos}), y reduce las líneas de código; una especificación completa del lenguaje puede hallarse en \autocite{GolangSpec}. También intenta establecer un o dos formas para realizar una determinada tarea, lo cual logra que \textbf{facilita la lectura del código}.
+
+El lenguaje es lo suficientemente inteligente como para \emph{inferir tipos} en asignaciones con el operador \dq{:=}. Esta característica favorece a la \textbf{escritura} del código.  
+
+\begin{lstlisting}[title=Distintas formas de declarar una variable]
+s := ""
+var s string
+var s = ""
+var s string = ""
+\end{lstlisting}
+
+El diseño y la implementación del lenguaje favorecen más que nada a la \textbf{seguridad} y al \textbf{costo de ejecución} de los programas. Para ello utiliza un \emph{recolector de basura} (\emph{Garbage Collector}), que se encarga de administrar el uso de la memoria para evitar \emph{referencias colgantes} o \emph{memory leaks} (se podría considerar también como un incremento en la facilidad de escritura)   
+
+Go ha reemplazado lenguajes dinámicos porque balancea \emph{expresividad} con \emph{seguridad}; los programas escritos en Go típicamente corren más rápido que programas escritos en lenguajes dinámicos y sufren muchos menos errores en tiempo de ejecución por problemas de tipos inesperados \autocite{BookTheGoProgrammingLanguage}. La seguridad que provee el lenguaje se da gracias a su \textbf{sistema de tipos} y a que es \textbf{\emph{memory-safe}} (manejo de memoria seguro) \autocite{TheGoProgrammingLanguage}. 
+
+\section{Sistema de tipos}
+
+Go es un lenguaje \textbf{fuerte y estáticamente tipado}. Todas las expresiones tienen un tipo determinado en tiempo de compilación, y una vez declarada una variable no puede cambiar su tipo.
+
+\vspace*{5mm}
+\begin{lstlisting}[title=\centering Ejemplos de asignaciones válidas e inválidas (nótese el uso de los operadores \dq{:=} y \dq{=})]
+aString := "Hello world" // Variable de tipo cadena
+
+aString := 3 // No se puede redefinir la variable
+aString := "Bye" // No se puede redefinir la variable
+aString = 3 // Asignación ilegal
+aString = "Bye world" // Asignación válida
+
+\end{lstlisting}
+
+No provee conversiones implícitas, por lo cual no es posible tener \textbf{expresiones mixtas} \footnote{expresiones que involucren más de un tipo de dato}. Tampoco tiene constructores o destructores, pero cuando se crea una variable se la inicializa con el \textbf{valor cero} o \textbf{valor inicial} de su tipo de dato.
+
+\subsection{Tipos de datos}
+
+Go provee distintos tipos de datos simples por defecto, ellos son:
+
+\begin{itemize}
+    \item Numéricos: su valor inicial es 0
+    \begin{itemize}
+        \item Enteros: con y sin signo; también brinda opciones dependientes de la plataforma
+        \item Punto flotante: 32 o 64 bits.
+    \end{itemize}
+    \item Cadenas: se inicializan a cadena vacía ("")
+    \item Booleanos: se inicializan a \texttt{false} 
+\end{itemize}
+
+Tipos de datos complejos provistos por el lenguaje son los \textbf{arreglos} (listas indexables de un tipo de dato específico con un tamaño predeterminado), las \textbf{rebanadas} o \textbf{slices} (segmento de un arreglo, su tamaño puede variar en tiempo de ejecución), y los \textbf{mapas} (listas asociativas o \emph{clave-valor}, se definen con un tipo de dato para la clave y otro para el valor). Cabe aclarar que el tamaño de un arreglo forma parte de la definición de su tipo, por lo tanto no se puede asignar a una variable cuyo tipo sea un arreglo de tamaño \texttt{X} un arreglo con tamaño distinto de \texttt{X} 
+
+También existe la posibilidad de definir \textbf{estructuras} o \textbf{registros}, cuyos campos serán de un tipo de dato simple o complejo.
+
+\vspace*{5mm}
+\begin{lstlisting}[title=Definición de un tipo de registro \texttt{Circle} con tres campos del mismo tipo]
+type Circle struct {
+    x, y, r float64
+}
+\end{lstlisting}
+
+Los tipos de datos complejos se inicializan con los valores iniciales que tengan los tipos de datos que los componen
+
+Otro tipo de dato complejo que provee Go es el tipo de dato \textbf{puntero}. Se define en base a otro tipo de dato, y su valor será el de una \textbf{dirección} de memoria que almacenará un valor del tipo de dato definido para el puntero.  
+
+
+
+\section{Estructuras de control}
+
+
+\section{Paradigmas}
+
+
+\section{Manejo de eventos inusuales}
+
+
+\section{Concurrencia}
+\subsection{\texttt{goroutines}}
+\subsection{Canales}
+
+
+
+
+
+
+
+
 
 
 
