@@ -1,24 +1,23 @@
 \definecolor{comment-green}{rgb}{0,0.5,0}
 \definecolor{bg-light-gray}{HTML}{E9E9E9}
-\definecolor{telegram-blue}{HTML}{148AC5}
-\definecolor{keyword-alizarin}{rgb}{0.82, 0.1, 0.26}
+\definecolor{gopher}{HTML}{D0B698}
 
 \input{sty/listings-golang.sty}
 
 \lstdefinestyle{go}{
     language=Golang,
-    backgroundcolor=\color{bg-light-gray},
+    backgroundcolor=\color{gopher},
     basicstyle=\ttfamily,
-  	keywordstyle=\bfseries\color{keyword-alizarin},
-    stringstyle=\color{telegram-blue},
+  	keywordstyle=\bfseries\color{white},
+    stringstyle=\color{blue},
     commentstyle=\color{comment-green}\itshape,
     numberstyle=\color{gray},
     identifierstyle=\color{black},
     rulecolor=\color{gray},
     showstringspaces=false,
     escapeinside={\%*}{*)},
-    %morekeywords={TipoCliente,TipoBebida},
-    %otherkeywords={::,=,==,not,++},
+    morekeywords={},
+    otherkeywords={},
     breaklines=true,
     frame=trbl, 
     framexleftmargin=25pt,
