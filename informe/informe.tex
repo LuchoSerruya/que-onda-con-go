@@ -101,7 +101,7 @@ Go provee distintos tipos de datos simples por defecto, ellos son:
     \item Booleanos: se inicializan a \texttt{false} 
 \end{itemize}
 
-Tipos de datos complejos provistos por el lenguaje son los \textbf{arreglos} (listas indexables de un tipo de dato específico con un tamaño predeterminado), las \textbf{rebanadas} o \textbf{slices} (segmento de un arreglo, su tamaño puede variar en tiempo de ejecución), y los \textbf{mapas} (listas asociativas o \emph{clave-valor}, se definen con un tipo de dato para la clave y otro para el valor). Cabe aclarar que el tamaño de un arreglo forma parte de la definición de su tipo, por lo tanto no se puede asignar a una variable cuyo tipo sea un arreglo de tamaño \texttt{X} un arreglo con tamaño distinto de \texttt{X} 
+Tipos de datos complejos provistos por el lenguaje son los \textbf{arreglos} (listas indexables de un tipo de dato específico con un tamaño predeterminado), las \textbf{rebanadas} o \textbf{slices} (segmento de un arreglo, su tamaño puede variar en tiempo de ejecución), y los \textbf{mapas} (listas asociativas o \emph{clave-valor}, se definen con un tipo de dato para la clave y otro para el valor). Cabe aclarar que el tamaño de un arreglo forma parte de la definición de su tipo, por lo tanto no se puede asignar a una variable cuyo tipo sea un arreglo de tamaño \texttt{X} un arreglo de tamaño distinto de \texttt{X} 
 
 También existe la posibilidad de definir \textbf{estructuras} o \textbf{registros}, cuyos campos serán de un tipo de dato simple o complejo.
 
@@ -112,17 +112,94 @@ type Circle struct {
 }
 \end{lstlisting}
 
-Los tipos de datos complejos se inicializan con los valores iniciales que tengan los tipos de datos que los componen
+Los tipos de datos complejos se inicializan con los valores iniciales que tengan los tipos de datos que los componen.
 
-Otro tipo de dato complejo que provee Go es el tipo de dato \textbf{puntero}. Se define en base a otro tipo de dato, y su valor será el de una \textbf{dirección} de memoria que almacenará un valor del tipo de dato definido para el puntero.  
+Otro tipo de dato complejo que provee Go es el tipo de dato \textbf{puntero}. Se define en base a otro tipo de dato, y su valor será el de una \textbf{dirección} de memoria que almacenará un valor del tipo de dato definido para el puntero. 
+
+Al igual que C, se obtiene el valor apuntado por el puntero mediante el operador \texttt{*}, y para conseguir la dirección de un tipo de dato se utiliza el operador \texttt{\&} 
 
 
 
 \section{Estructuras de control}
 
+Go cuenta con tres estructuras de control, dos de selección y una de iteración.
+
+La única estructura de control que implementa es el ciclo \texttt{for}, con la siguiente sintaxis:
+
+\begin{lstlisting}[title=\centering Sintaxis del ciclo \texttt{for} (la llave debe estar en la misma línea que las sentencias de incremento)]
+for <INICIALIZACIÓN>; <CONDICIÓN>; <INCREMENTO> {
+    // Cero o más sentencias
+} 
+\end{lstlisting}
+
+Con esta única estructura se puede simular el ciclo \texttt{while} (solamente especificando la condición, y controlándola dentro del bloque de sentencias), o un ciclo infinito (\texttt{for} sin ninguna indicación) 
+
+Si se desea iterar sobre una estructura indexable (arreglo o mapa), la claúsula \texttt{range} devuelve una clave y su respectivo valor   
+
+\vspace*{5mm}
+\begin{lstlisting}[title=Iterando sobre un arreglo con \texttt{range}]
+for i, value := range arr {
+    fmt.Printf("POSICION %d : VALOR %v\n", i, value)
+} 
+\end{lstlisting}
+
+La estructura de decisión más simple con la que cuenta el lenguaje es el \texttt{if}. Al igual que el \texttt{for}, la condición no necesariamente se escribe entre paréntesis, y las llaves que indican el bloque de instrucciones son necesarias y van en la misma línea que la condición. Se puede indicar también, con la palabra reservada \texttt{else}, el bloque de sentencias a ejecutar si no se cumple la condición especificada por el \texttt{if}.  
+
+\vspace*{5mm}
+\begin{lstlisting}[title=Ejemplo de varias estructuras de control]
+for i := 0; i < 10; i++ {
+    if i % 2 == 0 {
+        fmt.Printf("El valor %d es par\n", i)
+    } else {
+        fmt.Printf("El valor %d es impar\n", i)
+    }
+}
+\end{lstlisting}
+
+Otra estructura de decisión es el \texttt{switch}; consiste en indicar una \emph{sentencia simple} \footnote{sentencia que devuelva un valor}, dentro de las llaves los distintos casos posibles con la palabra \texttt{case} y seguido de dos puntos (:) el bloque de sentencias que se desea ejecutar si se cumple esa condición. 
+
+El comportamiento por defecto del \texttt{switch} es distinto al \texttt{switch} de C, en tanto que si se cumple una condición, no seguirá automáticamente ejecutando el bloque de sentencias de la condición que esté por debajo de la que se cumplió (si se desea tal comportamiento, se lo puede especificar con la palabra \texttt{fallthrough} \autocite{TheWayToGo}).
+
+Por último, se puede especificar un bloque de sentencias a ejecutar si ninguna de las condiciones anteriores se cumplieron; tal bloque se indica con la palabra reservada \texttt{default} 
+
+\begin{lstlisting}[title=Estructura de decisión múltiple \texttt{switch}]
+switch var1 {
+    case val1:
+        ...
+    case val2:
+        ...
+    default:
+        ...
+}
+\end{lstlisting}
+
 
 \section{Paradigmas}
 
+Principalmente, Go es un lenguaje de programación \textbf{procedural}. Utiliza estructuras de control, asignación de variables, constantes, y funciones que manipulan datos.
+
+Las funciones pueden recibir cero o más parámetros de cualquier tipo, y pueden devolver o más resultados (la expresión \texttt{range} devuelve dos valores, el índice de una estructura iterable y su correspondiente valor). La cantidad de parámetros que recibe una función puede ser variable, especificándolo con \texttt{...} antes del tipo del parámetro.
+
+\vspace*{5mm}
+\begin{lstlisting}[title=Función con cantidad variable de argumentos]
+func sumatoria(args ...int) int{
+    total := 0
+    for _, value := range args {
+        total += value
+    }
+    return total
+}
+\end{lstlisting}
+
+La firma de una función siempre empieza con la palabra reservada \texttt{func}, le sigue el nombre de la función, luego entre paréntesis los argumentos que recibe, indicando primero su nombre y después su tipo (si es que recibe parámetros, si no recibe se dejan los paréntesis vacíos), y por último el resultado que devuelve (si son varios, se especifica entre paréntesis el tipo de dato de cada valor devuelto). 
+
+Go considera las funciones como \emph{ciudadanos de primera clase} \autocite{Wikipedia:first-class-citizen}, por lo tanto pueden ser recibidas como parámetros (una función puede recibir una función), o devueltas como resultado (una función que devuelve una función\footnote{El patrón de diseño \emph{Decorador} podría ser implementado gracias a esta característica}) 
+
+El lenguaje también permite definir \emph{funciones anónimas}; su definición se trata como una expresión. Se pueden almacenar en variables, y no llevan nombre. 
+
+Antes del nombre de una función, se puede especificar \emph{el tipo de dato receptor}, lo cual convertiría a la función en un \emph{método}. De esta forma, se pueden agregar comportamientos a los tipos de datos definidos por el usuario (aunque puede ser casi cualquier tipo de dato \autocite{TheWayToGo:Methods})
+
+\Large The Way to Go página 240 (265 del PDF)
 
 \section{Manejo de eventos inusuales}
 
