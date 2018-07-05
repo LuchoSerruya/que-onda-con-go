@@ -25,7 +25,7 @@
 
 En el año 2007, tres ingenieros de Google (\emph{Robert Griesemer}, \emph{Rob Pike}, y \emph{Ken Thompson}) comenzaron a diseñar el lenguaje de programación \emph{Go}, como proyecto secundario. Para el 2008, empezaron con el desarrollo de un compilador y un \emph{runtime} \footnote{Software diseñado para soportar la ejecución de programas escritos en algún lenguaje de programación \autocite{Wikipedia:runtime}}. El 30 de Octubre de 2009, Rob Pike dio la primer charla sobre Go en una \emph{Google Techtalk} \autocite{TheGoProgrammingLanguage}, pero recién para el 10 de Noviembre de ese mismo año el proyecto fue oficialmente anunciado. Debido a que el proyecto es \emph{open-source}, se formó una gran comunidad que aceleró el desarrollo y uso del lenguaje 
 
-A partir de Mayo de 2010, Google utiliza Go en producción para la infraestructura de sus servidores (lo cual demuestra que la empresa apuesta en él, y que el lenguaje tiene peso como para estar en producción \autocite{TheWayToGo:Origins})
+Desde Mayo de 2010, Google utiliza Go en producción para la infraestructura de sus servidores (lo cual demuestra que la empresa apuesta en él, y que el lenguaje tiene peso como para estar en producción \autocite{TheWayToGo:Origins})
 
 \vspace*{10mm}
 \begin{lstlisting}[title=\dq{Hola mundo} en Go]
@@ -39,7 +39,7 @@ func main() {
 \end{lstlisting}
 
 
-Sus creadores decidieron encarar el proyecto al ver que no había surgido ningún lenguaje de programación (de bajo nivel pero con amplios niveles de abstracción) que sea adeacuado para el panorama computacional de hoy en día. Por lo tanto, se considera a Go como \dq{el C del siglo 21} \autocite{BookTheGoProgrammingLanguage:Preface} 
+Sus creadores decidieron encarar el proyecto al ver que no había surgido ningún lenguaje de programación (de bajo nivel pero con amplios niveles de abstracción) que sea adecuado para el panorama computacional de hoy en día. Por lo tanto, se considera a Go como \dq{el C del siglo 21} \autocite{BookTheGoProgrammingLanguage:Preface} 
 
 El lenguaje se utiliza mucho para construir servidores, herramientas y sistemas para programadores, pero no deja de ser un lenguaje de propósito general.
 
@@ -95,13 +95,13 @@ Go provee distintos tipos de datos simples por defecto, ellos son:
     \item Numéricos: su valor inicial es 0
     \begin{itemize}
         \item Enteros: con y sin signo; también brinda opciones dependientes de la plataforma
-        \item Punto flotante: 32 o 64 bits.
+        \item Punto flotante: 32 o 64 bits
     \end{itemize}
-    \item Cadenas: se inicializan a cadena vacía ("")
+    \item Cadenas: se inicializan a cadena vacía (\"\")
     \item Booleanos: se inicializan a \texttt{false} 
 \end{itemize}
 
-Tipos de datos complejos provistos por el lenguaje son los \textbf{arreglos} (listas indexables de un tipo de dato específico con un tamaño predeterminado), las \textbf{rebanadas} o \textbf{slices} (segmento de un arreglo, su tamaño puede variar en tiempo de ejecución), y los \textbf{mapas} (listas asociativas o \emph{clave-valor}, se definen con un tipo de dato para la clave y otro para el valor). Cabe aclarar que el tamaño de un arreglo forma parte de la definición de su tipo, por lo tanto no se puede asignar a una variable cuyo tipo sea un arreglo de tamaño \texttt{X} un arreglo de tamaño distinto de \texttt{X} 
+Tipos de datos complejos provistos por el lenguaje son los \textbf{arreglos} (listas indexables de un tipo de dato específico con un tamaño predeterminado), las \textbf{rebanadas} o \textbf{slices} (segmento de un arreglo, su tamaño puede variar en tiempo de ejecución), y los \textbf{mapas} (listas asociativas o \emph{clave-valor}, se definen con un tipo de dato para la clave y otro para el valor). Cabe aclarar que el tamaño de un arreglo forma parte de la definición de su tipo, por lo tanto no se puede asignar a una variable cuyo tipo sea un arreglo de tamaño \texttt{X} un arreglo de tamaño distinto de \texttt{X}.
 
 También existe la posibilidad de definir \textbf{estructuras} o \textbf{registros}, cuyos campos serán de un tipo de dato simple o complejo.
 
@@ -112,11 +112,11 @@ type Circle struct {
 }
 \end{lstlisting}
 
-Los tipos de datos complejos se inicializan con los valores iniciales que tengan los tipos de datos que los componen.
+Los tipos de datos complejos se inicializan con los valores iniciales que tenga cada uno de los tipos de datos que los componen.
 
 Otro tipo de dato complejo que provee Go es el tipo de dato \textbf{puntero}. Se define en base a otro tipo de dato, y su valor será el de una \textbf{dirección} de memoria que almacenará un valor del tipo de dato definido para el puntero. 
 
-Al igual que C, se obtiene el valor apuntado por el puntero mediante el operador \texttt{*}, y para conseguir la dirección de un tipo de dato se utiliza el operador \texttt{\&} 
+Al igual que C, se obtiene el valor apuntado por el puntero mediante el operador \texttt{*} (\emph{dereferenciamiento}), y para conseguir la dirección de un tipo de dato se utiliza el operador \texttt{\&} 
 
 
 
@@ -132,7 +132,7 @@ for <INICIALIZACIÓN>; <CONDICIÓN>; <INCREMENTO> {
 } 
 \end{lstlisting}
 
-Con esta única estructura se puede simular el ciclo \texttt{while} (solamente especificando la condición, y controlándola dentro del bloque de sentencias), o un ciclo infinito (\texttt{for} sin ninguna indicación) 
+Con esta única estructura se puede simular el ciclo \texttt{while} (solamente especificando la condición, y controlándola dentro del bloque de sentencias con las palabras reservadas \texttt{return}, \texttt{continue}, y \texttt{break}), o un ciclo infinito (\texttt{for} sin ninguna indicación) 
 
 Si se desea iterar sobre una estructura indexable (arreglo o mapa), la claúsula \texttt{range} devuelve una clave y su respectivo valor   
 
@@ -156,9 +156,9 @@ for i := 0; i < 10; i++ {
 }
 \end{lstlisting}
 
-Otra estructura de decisión es el \texttt{switch}; consiste en indicar una \emph{sentencia simple} \footnote{sentencia que devuelva un valor}, dentro de las llaves los distintos casos posibles con la palabra \texttt{case} y seguido de dos puntos (:) el bloque de sentencias que se desea ejecutar si se cumple esa condición. 
+Otra estructura de decisión es el \texttt{switch}; consiste en indicar una \emph{sentencia simple} \footnote{Sentencia que devuelva un valor}, dentro de las llaves los distintos casos posibles con la palabra \texttt{case} y seguido de dos puntos (:) el bloque de sentencias que se desea ejecutar si se cumple esa condición. 
 
-El comportamiento por defecto del \texttt{switch} es distinto al \texttt{switch} de C, en tanto que si se cumple una condición, no seguirá automáticamente ejecutando el bloque de sentencias de la condición que esté por debajo de la que se cumplió (si se desea tal comportamiento, se lo puede especificar con la palabra \texttt{fallthrough} \autocite{TheWayToGo:Origins}).
+El comportamiento por defecto del \texttt{switch} es distinto al \texttt{switch} de C, en tanto que si se cumple una condición, no seguirá automáticamente ejecutando el bloque de sentencias de la condición que esté por debajo de la que se cumplió (si se desea tal comportamiento, se lo puede especificar con la palabra \texttt{fallthrough} \autocite{TheWayToGo:ControlStructures}).
 
 Por último, se puede especificar un bloque de sentencias a ejecutar si ninguna de las condiciones anteriores se cumplieron; tal bloque se indica con la palabra reservada \texttt{default} 
 
@@ -193,7 +193,7 @@ func sumatoria(args ...int) int{
 }
 \end{lstlisting}
 
-La firma de una función siempre empieza con la palabra reservada \texttt{func}, le sigue el nombre de la función, luego entre paréntesis los argumentos que recibe, indicando primero su nombre y después su tipo (si es que recibe parámetros, si no recibe se dejan los paréntesis vacíos), y por último el resultado que devuelve (si son varios, se especifica entre paréntesis el tipo de dato de cada valor devuelto). 
+La firma de una función siempre empieza con la palabra reservada \texttt{func}, le sigue el nombre de la función, luego entre paréntesis los argumentos que recibe, indicando primero su nombre y después su tipo (si es que recibe parámetros, si no recibe se dejan los paréntesis vacíos o se pueden obviar), y por último el resultado que devuelve (si son varios, se especifica entre paréntesis y separado por comas el tipo de dato de cada valor devuelto). 
 
 Go considera las funciones como \emph{ciudadanos de primera clase} \autocite{Wikipedia:first-class-citizen}, por lo tanto pueden ser recibidas como parámetros (una función puede recibir una función), o devueltas como resultado (una función que devuelve una función\footnote{El patrón de diseño \emph{Decorador} podría ser implementado gracias a esta característica}) 
 
@@ -236,9 +236,9 @@ El ejemplo anterior muestra la única forma que provee Go para simular una \text
 
 Por lo tanto, para crear estructuras de datos complejas, la forma de hacerlo en Go es a través de la composición, y no de la herencia.
 
-El lenguaje permite definir \textbf{interfaces}, que son conjuntos de métodos que un tipo debe implementar. A diferencia de lenguajes como Java, el tipo de dato que implemente la interfase no tiene que indicar qué interfase implementa, sino que directamnete debe implementar los \textbf{métodos} que define la interfase.
+El lenguaje permite definir \textbf{interfases}, que son conjuntos de métodos que un tipo debe implementar. A diferencia de lenguajes como Java, el tipo de dato que implemente la interfase no tiene que indicar qué interfase implementa, sino que directamente debe implementar los \textbf{métodos} que ésta define.
 
-\begin{displayquote}
+\begin{displayquote}\itshape
 Las interfases en Go proveen una manera de \emph{especificar el comportamiento} de un objeto: si algo puede hacer \emph{esto}, entonces se puede usar \emph{aquí} \autocite{TheWayToGo:Interfaces}   
 \end{displayquote}
 
@@ -260,7 +260,7 @@ De esta forma Go implementa el \textbf{polimorfismo}. No es polimorfismo de clas
 La forma idiomática para manejar errores es \textbf{devolviendo valores de error}. Muchas funciones de su librería estándar utilizan esta metodología para indicar que no se pudo completar la tarea satisfactoriamente.  La posibilidad de que las funciones retornen más de un valor facilita la implementación de esta técnica.
 
 \vspace*{5mm}
-\begin{lstlisting}[title={\centering La función \texttt{Open} de la libreria \texttt{os} devuelve el descriptor del archivo que se quiere abrir, y un valor de error}]
+\begin{lstlisting}[title={\centering La función \texttt{Open} de la librería \texttt{os} devuelve el descriptor del archivo que se quiere abrir, y un valor de error en caso de que no se haya podido}]
 file, err := os.Open("test.txt")
 if err != nil {
     // manejar el error
@@ -270,11 +270,15 @@ if err != nil {
 
 Por otro lado, Go no maneja el concepto de \emph{excepciones}, pero sí tiene dos funciones que emulan un comportamiento muy similar: \texttt{\textbf{panic}} y \texttt{\textbf{recover}}.
 
-La función \texttt{panic} recibe un parámetro que sirve como mensaje de error y no devuelve nada. Pone al hilo de ejecución en un estado de error, que se irá propagando hasta ser manejado, o bien hasta finalizar la \emph{pila de llamadas} y así mismo la ejecución del programa. La función \texttt{recover} es la encargada de recuperar el control del hilo de ejecución. No recibe nada y devuelve el valor que recibió \texttt{panic}.  Una llamada a \texttt{recover} durante una ejecución normal no tendrá ningún efecto; solamente es útil dentro de \emph{funciones diferidas} \autocite{BlogGolangDeferPanicRecover}.  
+La función \texttt{panic} recibe un parámetro que sirve como mensaje de error y no devuelve nada. Pone al hilo de ejecución en un estado de error, que se irá propagando hasta ser manejado, o bien hasta finalizar la \emph{pila de llamadas} y así mismo la ejecución del programa. 
+
+La función \texttt{recover} es la encargada de recuperar el control del hilo de ejecución. No recibe nada y devuelve el valor que recibió \texttt{panic}.  Una llamada a \texttt{recover} durante una ejecución normal no tendrá ningún efecto; solamente es útil dentro de \emph{funciones diferidas} \autocite{BlogGolangDeferPanicRecover}.  
 
 Una \textbf{función diferida} se especifica con la palabra reservada \texttt{defer} antes de su invocación, y consiste en retrasar su ejecución hasta terminada la unidad llamadora. Son útiles para cerrar archivos o conexiones con bases de datos, liberar recursos, o manejar errores.
 
-Cuando el hilo de ejecución entra en pánico, se detiene el flujo normal de ejecución, se llevan a cabo todas las funciones diferidas que tenga la unidad, y se regresa al contexto que la invocó. Si una unidad tiene más de una función diferida, se ejecutan en orden \emph{LIFO} (\emph{Last In, First Out}, \emph{Último en Entrar, Primero en Salir}) 
+Cuando el hilo de ejecución entra en pánico, se detiene el flujo normal de ejecución, se llevan a cabo todas las funciones diferidas que tenga la unidad, y se regresa al contexto que la invocó. Si una unidad tiene más de una función diferida, se ejecutan en orden \emph{LIFO} (\emph{Last In, First Out}, \emph{Último en Entrar, Primero en Salir}).
+
+\pagebreak
 
 \begin{lstlisting}[title={\emph{Defer, Panic, Recover} \autocite{MediumDeferPanicRecover}}]
 package main
@@ -315,7 +319,7 @@ Una de las principales y más novedosas características de Go es su soporte nat
 
 Go ejecuta código concurrentemente a través de las \texttt{goroutines}. No existe ninguna asociación directa en una \texttt{goroutine} y un hilo del sistema operativo: puede ser multiplexada a uno o más hilos, dependiendo de su disponibilidad; esto se logra gracias al \emph{planificador de goroutines} y al \emph{runtime} de Go \autocite{TheWayToGo:Goroutines}    
 
-Para correr código \emph{en una rutina distinta de la que está ejecutando el hilo principal}, simplemente se debe anteponer la palabra reservada \texttt{go} a la llamada a función deseada.
+Para correr código \emph{en una rutina distinta de la que está ejecutando el hilo principal}, simplemente se debe anteponer la palabra reservada \texttt{go} a la llamada a la función deseada.
 
 \vspace*{5mm}
 \begin{lstlisting}[title={Ejecución concurrente con \texttt{goroutines} \autocite{GolangBotGoroutines}}]
@@ -341,7 +345,50 @@ Uno de los principales problemas que se presenta en la programación concurrente
 
 Los canales proveen un mecanismo para que dos \texttt{goroutines} se comuniquen entre sí y sincronicen sus ejecuciones \autocite{AnIntroductionToProgrammingInGo:Concurrency}. Se definen con un tipo de dato, que será el tipo de dato de los valores que viajarán a través de él.
 
-\Large AnIntroductionToProgrammingInGo Capítulo 10
+\vspace*{5mm}
+\begin{lstlisting}[title={Dos \texttt{goroutines} que se comunican a través de un canal de cadenas \autocite{AnIntroductionToProgrammingInGo:Concurrency}}]
+package main
+import (
+    "fmt"
+    "time"
+)
+func pinger(c chan string) {
+    for i := 0; ; i++ {
+        // Enviamos una cadena por el canal
+        c <- "ping"
+    }
+}
+func printer(c chan string) {
+    for {
+        // Recibimos una cadena por el canal
+        msg := <- c
+        fmt.Println(msg)
+        time.Sleep(time.Second * 1)
+    }
+}
+func main() {
+    var c chan string = make(chan string)
+    go pinger(c)
+    go printer(c)
+    var input string
+    fmt.Scanln(&input)
+}
+\end{lstlisting}
+
+Las acciones sobre un canal son \textbf{bloqueantes}, lo que significa que la ejecución se detendrá en ese punto hasta que la pueda completar exitosamente.
+
+Si una \texttt{goroutine} intenta leer de un canal del cual no hay nada para leer (está vacío, no hay valores nuevo que leer), se bloqueará hasta que otra \texttt{goroutine} escriba algo en el canal.  
+
+Análogamente, sucedería lo mismo cuando se quiera escribir y el canal esté lleno (en el caso de los canales con buffer, los cuales tienen un tamaño predeterminado).
+
+
+\section{Conclusión}
+
+Go es un lenguaje moderno, pensado para grandes sistemas, soporta tanto el paradigma procedural como el orientado a objetos (con una perspectiva muy distinta a la de otros lenguajes que soportan el paradigma), y está en crecimiento constante.
+
+Fue diseñado con la idea en mente de que las computadoras de hoy en idea tienen múltiples núcleos y capacidad de correr tareas en forma concurrente y paralela, por lo tanto la facilidad que brinda para una programación que aproveche dichas características.
+
+Permite construir estructuras de datos complejas y armar grandes niveles de abstracción a través de la composición y polimorfismo de comportamiento. Sin embargo no deja de tener un rendimiento comparable con el de C o C++ \autocite{TheWayToGo:Editors}
 
 
 
