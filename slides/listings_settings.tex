@@ -1,0 +1,34 @@
+\definecolor{comment-green}{rgb}{0,0.5,0}
+\definecolor{bg-light-gray}{HTML}{E9E9E9}
+\definecolor{gopher}{HTML}{D0B698}
+
+\input{sty/listings-golang.sty}
+
+\lstdefinestyle{go}{
+    language=Golang,
+    backgroundcolor=\color{gopher},
+    basicstyle=\ttfamily,
+  	keywordstyle=\bfseries\color{white},
+    stringstyle=\color{blue},
+    commentstyle=\color{comment-green}\itshape,
+    numberstyle=\color{gray},
+    identifierstyle=\color{black},
+    rulecolor=\color{gray},
+    showstringspaces=false,
+    escapeinside={\%*}{*)},
+    morekeywords={fmt},
+    otherkeywords={},
+    breaklines=true,
+    frame=trbl, 
+    framexleftmargin=25pt,
+    numbers=left,
+    xleftmargin=\parindent,
+    frameround=tttt,
+    captionpos=b,
+    % re tirado de los pelos, pero es lo que hay
+    % sacado de:
+    % https://tex.stackexchange.com/questions/24528/having-problems-with-listings-and-utf-8-can-it-be-fixed
+    inputencoding=utf8,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {Ó}{{\'O}}1 {ú}{{\'u}}1,
+}
